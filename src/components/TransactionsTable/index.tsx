@@ -1,16 +1,11 @@
-import { useEffect } from "react"
-import { api } from "../../services/api";
+import { useContext } from "react"
 import { Container } from "./styles"
+import { TransactionsContext } from '../../TransactionsContext'
 
-export function TransactionsTable(){
+export function TransactionsTable() {
+    const {transactions} = useContext(TransactionsContext);
 
-    useEffect(() => {
-        api.get('transactions')
-        .then(response => console.log(response.data))
-    },
-    [] //<== quando colocado vazio será executado apenas uma vez
-    );
-    return(
+    return (
         <Container>
             <table>
                 <thead>
@@ -22,18 +17,26 @@ export function TransactionsTable(){
                     </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Desenvolvimento de website</td>
-                    <td className="deposit">R$12.0000</td>
-                    <td>Dev</td>
-                    <td>20/01/01</td>
-                    </tr>
-                    <tr>
-                    <td>Desenvolvimento de website</td>
-                    <td className="withdraw">R$12.0000</td>
-                    <td>Dev</td>
-                    <td>20/01/01</td>
-                    </tr>
+                    {transactions.map(transaction => (
+                        <tr key={transaction.id}>
+                            <td>{transaction.title}</td>
+                            <td className={transaction.type}>
+                                {new Intl.NumberFormat('pt-BR', {
+                                    style: 'currency',
+                                    currency: 'BRL',
+                                }).format(transaction.amount)}
+                            </td>
+                            <td>{transaction.category}</td>
+                            <td>
+                                {new Intl.DateTimeFormat('pt-BR', {
+                                }).format(
+                                    new Date(transaction.createdAt
+                                    )
+                                )
+                                }
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
 
