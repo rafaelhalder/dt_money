@@ -18,7 +18,7 @@ input {
     background: #e7e9ee;
 
     font-weight: 400;
-    font-size 1rem;
+    font-size: 1rem;
 
     &::placeholder {
         color: var(--text-body);
@@ -36,7 +36,7 @@ button[type="submit"]{
     height: 4rem;
     background: var(--green);
     color: #FFF;
-    bordeer-radius: 0.25rem;
+    border-radius: 0.25rem;
     border: 0;
     font-size: 1rem;
     font-weight: 600;
